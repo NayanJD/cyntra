@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package user;
+  
+// protoc-gen-go version is greater than 1.4.0, proto file needs to add go_package, otherwise it can't be generated
+option go_package = "./user";
+
+message IdRequest {
+    string id = 1;
+}
+  
+message UserResponse {
+    // user id
+    string id = 1;
+    // user name
+    string name = 2;
+    // user gender
+    string gender = 3;
+}
+  
+service User {
+    rpc getUser(IdRequest) returns(UserResponse);
+}
