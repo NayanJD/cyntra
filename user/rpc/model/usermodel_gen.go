@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
@@ -65,6 +66,7 @@ func newUserModel(conn sqlx.SqlConn, c cache.CacheConf) *defaultUserModel {
 func (m *defaultUserModel) Insert(ctx context.Context, data *User) (sql.Result, error) {
 	publicUserIdKey := fmt.Sprintf("%s%v", cachePublicUserIdPrefix, data.Id)
 	publicUserUsernameKey := fmt.Sprintf("%s%v", cachePublicUserUsernamePrefix, data.Username)
+	data.Id = uuid.NewString()
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)", m.table, userRowsExpectAutoSet)
 		return conn.ExecCtx(ctx, query, data.Id, data.Username, data.HashedPassword, data.FirstName, data.LastName, data.Gender, data.Dob, data.RoleId, data.CreatedAt, data.UpdatedAt, data.ArchivedAt)
