@@ -1,9 +1,11 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE IF NOT EXISTS role (
     id  text PRIMARY KEY,
     name text NOT NULL UNIQUE,
     created_at  timestamptz NOT NULL,
     updated_at  timestamptz NOT NULL,
-    archived_at  timestamptz NOT NULL
+    archived_at  timestamptz
 );
 
 CREATE TABLE IF NOT EXISTS scope (
@@ -12,7 +14,7 @@ CREATE TABLE IF NOT EXISTS scope (
 
     created_at  timestamptz NOT NULL,
     updated_at  timestamptz NOT NULL,
-    archived_at  timestamptz NOT NULL
+    archived_at  timestamptz
 );
 
 CREATE TABLE IF NOT EXISTS role_scope (
@@ -24,7 +26,7 @@ CREATE TABLE IF NOT EXISTS role_scope (
 
     created_at  timestamptz NOT NULL,
     updated_at  timestamptz NOT NULL,
-    archived_at  timestamptz NOT NULL
+    archived_at  timestamptz
 );
 
 CREATE INDEX role_scope_role_id ON role_scope (role_id);
@@ -43,7 +45,7 @@ CREATE TABLE IF NOT EXISTS public.user (
 
     created_at  timestamptz NOT NULL,
     updated_at  timestamptz NOT NULL,
-    archived_at  timestamptz NOT NULL,
+    archived_at  timestamptz,
 
     FOREIGN KEY (role_id) REFERENCES role (id)
 );

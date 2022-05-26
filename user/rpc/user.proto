@@ -1,7 +1,9 @@
 syntax = "proto3";
 
 package user;
-  
+
+import "google/protobuf/timestamp.proto";
+
 // protoc-gen-go version is greater than 1.4.0, proto file needs to add go_package, otherwise it can't be generated
 option go_package = "./user";
 
@@ -17,7 +19,29 @@ message UserResponse {
     // user gender
     string gender = 3;
 }
+
+message RegisterRequest {
+    string username = 1;
+    string password = 2;
+    string first_name = 3;
+    string last_name = 4;
+    string gender = 5;
+    google.protobuf.Timestamp dob = 6;
+}
+
+message RegisterResponse {
+    string id = 1;
+    string username = 2;
+    string password = 3;
+    string first_name = 4;
+    string last_name = 5;
+    string gender = 6;
+    google.protobuf.Timestamp dob = 7;
+}
+
+
   
 service User {
     rpc getUser(IdRequest) returns(UserResponse);
+    rpc registerUser(RegisterRequest) returns(RegisterResponse);
 }

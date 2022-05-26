@@ -26,3 +26,8 @@ func (s *UserServer) GetUser(ctx context.Context, in *user.IdRequest) (*user.Use
 	l := logic.NewGetUserLogic(ctx, s.svcCtx)
 	return l.GetUser(in)
 }
+
+func (s *UserServer) RegisterUser(ctx context.Context, in *user.RegisterRequest) (*user.RegisterResponse, error) {
+	l := logic.NewRegisterUserLogic(ctx, s.svcCtx)
+	return l.RegisterUser(in)
+}
