@@ -16,11 +16,13 @@ type (
 	IdRequest        = user.IdRequest
 	RegisterRequest  = user.RegisterRequest
 	RegisterResponse = user.RegisterResponse
+	UpdateRequest    = user.UpdateRequest
 	UserResponse     = user.UserResponse
 
 	User interface {
 		GetUser(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*UserResponse, error)
 		RegisterUser(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
+		UpdateUser(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	}
 
 	defaultUser struct {
@@ -42,4 +44,9 @@ func (m *defaultUser) GetUser(ctx context.Context, in *IdRequest, opts ...grpc.C
 func (m *defaultUser) RegisterUser(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
 	client := user.NewUserClient(m.cli.Conn())
 	return client.RegisterUser(ctx, in, opts...)
+}
+
+func (m *defaultUser) UpdateUser(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.UpdateUser(ctx, in, opts...)
 }
