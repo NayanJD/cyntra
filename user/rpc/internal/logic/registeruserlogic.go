@@ -77,7 +77,6 @@ func (l *RegisterUserLogic) RegisterUser(in *user.RegisterRequest) (*user.Regist
 	return &user.RegisterResponse{
 		Id:        newUser.Id,
 		Username:  newUser.Username,
-		Password:  newUser.HashedPassword,
 		FirstName: newUser.FirstName,
 		LastName:  newUser.LastName,
 		Gender:    newUser.Gender,
