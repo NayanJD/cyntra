@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS role_scope (
     archived_at  timestamptz
 );
 
-CREATE INDEX role_scope_role_id ON role_scope (role_id);
-CREATE INDEX role_scope_scope_id ON role_scope (scope_id);
+CREATE INDEX IF NOT EXISTS  role_scope_role_id ON role_scope (role_id);
+CREATE INDEX IF NOT EXISTS  role_scope_scope_id ON role_scope (scope_id);
 
 
 CREATE TABLE IF NOT EXISTS public.user (
@@ -50,4 +50,16 @@ CREATE TABLE IF NOT EXISTS public.user (
     FOREIGN KEY (role_id) REFERENCES role (id)
 );
 
-CREATE INDEX user_role_id ON public.user (role_id);
+CREATE INDEX IF NOT EXISTS  user_role_id ON public.user (role_id);
+
+CREATE TABLE IF NOT EXISTS refresh_token (
+    id  serial PRIMARY KEY,
+    token text NOT NULL,
+    user_id text NOT NULL,
+    created_at  timestamptz NOT NULL,
+    expires_at  timestamptz,
+
+    FOREIGN KEY (user_id) REFERENCES public.user (id)
+);
+
+CREATE INDEX IF NOT EXISTS  refresh_token_user_id ON refresh_token (user_id);
