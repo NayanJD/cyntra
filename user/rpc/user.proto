@@ -49,7 +49,7 @@ message UpdateRequest {
 
   
 service User {
-    rpc getUser(IdRequest) returns(UserResponse);
+    rpc getUser(IdRequest) returns(RegisterResponse);
     rpc registerUser(RegisterRequest) returns(RegisterResponse);
     rpc updateUser(UpdateRequest) returns(RegisterResponse);
 }
