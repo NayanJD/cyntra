@@ -36,3 +36,18 @@ func (s *UserServer) UpdateUser(ctx context.Context, in *user.UpdateRequest) (*u
 	l := logic.NewUpdateUserLogic(ctx, s.svcCtx)
 	return l.UpdateUser(in)
 }
+
+func (s *UserServer) Login(ctx context.Context, in *user.LoginRequest) (*user.LoginResponse, error) {
+	l := logic.NewLoginLogic(ctx, s.svcCtx)
+	return l.Login(in)
+}
+
+func (s *UserServer) Refresh(ctx context.Context, in *user.RefreshRequest) (*user.LoginResponse, error) {
+	l := logic.NewRefreshLogic(ctx, s.svcCtx)
+	return l.Refresh(in)
+}
+
+func (s *UserServer) VerifyToken(ctx context.Context, in *user.VerifyTokenRequest) (*user.VerifyTokenResponse, error) {
+	l := logic.NewVerifyTokenLogic(ctx, s.svcCtx)
+	return l.VerifyToken(in)
+}

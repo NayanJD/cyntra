@@ -7,3 +7,9 @@ Etcd:
 DataSource: postgres://go:password@localhost:5432/cyntra_local?sslmode=disable
 Cache:
   - Host: localhost:6379
+JwtSecret: ${JWT_SECRET}
+JwtExpiresSeconds: ${JWT_EXPIRY_SECONDS} # 900
+JwtRefreshExpiresSeconds: ${JWT_REFRESH_EXPIRY_SECONDS} # 604800
+RedisUrl: ${REDIS_URL} # redis://localhost:6379/0
+
+

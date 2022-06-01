@@ -63,3 +63,4 @@ CREATE TABLE IF NOT EXISTS refresh_token (
 );
 
 CREATE INDEX IF NOT EXISTS  refresh_token_user_id ON refresh_token (user_id);
+CREATE INDEX IF NOT EXISTS  refresh_token_token ON refresh_token (token);
