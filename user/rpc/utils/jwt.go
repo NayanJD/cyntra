@@ -32,15 +32,12 @@ func ValidateToken(tokenString string, secret string, claim jwt.Claims) (*jwt.To
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
 
-		fmt.Println("secret: ", secret)
-
 		return []byte(secret), nil
 	})
 
 	if token.Valid {
 		return token, nil
 	} else {
-		fmt.Println("token.Valid: ", token.Valid)
 		return nil, &InvalidJwt{}
 	}
 }
