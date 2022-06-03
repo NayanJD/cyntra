@@ -28,8 +28,6 @@ func NewRefreshLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RefreshLo
 }
 
 func (l *RefreshLogic) Refresh(in *user.RefreshRequest) (*user.LoginResponse, error) {
-
-	l.Logger.Info(in.RefreshToken)
 	validatedToken, err := utils.ValidateToken(in.RefreshToken, l.svcCtx.Config.JwtSecret, &RefreshJwtClaims{})
 
 	if err != nil {

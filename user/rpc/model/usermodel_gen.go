@@ -23,8 +23,9 @@ var (
 	userRowsExpectAutoSet   = strings.Join(stringx.Remove(userFieldNames, "create_time", "update_time"), ",")
 	userRowsWithPlaceHolder = builder.PostgreSqlJoin(stringx.Remove(userFieldNames, "id", "create_time", "update_time"))
 
-	cachePublicUserIdPrefix       = "cache:public:user:id:"
-	cachePublicUserUsernamePrefix = "cache:public:user:username:"
+	cachePublicUserIdPrefix           = "cache:public:user:id:"
+	cachePublicUserIdWithScopesPrefix = "cache:public:user_with_scopes:id:"
+	cachePublicUserUsernamePrefix     = "cache:public:user:username:"
 )
 
 type (
@@ -34,6 +35,7 @@ type (
 		FindOneByUsername(ctx context.Context, username string) (*User, error)
 		Update(ctx context.Context, data *User) error
 		Delete(ctx context.Context, id string) error
+		FindOneWithScopes(ctx context.Context, id string) (*UserWithScopes, error)
 	}
 
 	defaultUserModel struct {
@@ -53,6 +55,11 @@ type (
 		CreatedAt      time.Time `db:"created_at"`
 		UpdatedAt      time.Time `db:"updated_at"`
 		ArchivedAt     time.Time `db:"archived_at"`
+	}
+
+	UserWithScopes struct {
+		User
+		Scopes string
 	}
 )
 
@@ -101,6 +108,29 @@ func (m *defaultUserModel) FindOneByUsername(ctx context.Context, username strin
 		}
 		return resp.Id, nil
 	}, m.queryPrimary)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+func (m *defaultUserModel) FindOneWithScopes(ctx context.Context, id string) (*UserWithScopes, error) {
+	publicUserUsernameKey := fmt.Sprintf("%s%v", cachePublicUserIdWithScopesPrefix, id)
+	var resp UserWithScopes
+	err := m.QueryRowCtx(ctx, &resp, publicUserUsernameKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) (e error) {
+		query := fmt.Sprintf(`select %s, 
+			(select string_agg(s.name, ',')  
+			from public.user u 
+			join role_scope rs on u.role_id = rs.role_id 
+			join scope s on rs.scope_id = s.id 
+			where u.id = $1) as scopes 
+		from public.user u  where u.id = $1`, userRows)
+		return conn.QueryRowCtx(ctx, &resp, query, id)
+	})
 	switch err {
 	case nil:
 		return &resp, nil
