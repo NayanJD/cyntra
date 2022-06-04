@@ -3,7 +3,6 @@ package logic
 import (
 	"context"
 	"errors"
-	"fmt"
 	"strings"
 
 	"cyntra/user/rpc/internal/svc"
@@ -56,7 +55,7 @@ func (l *VerifyTokenLogic) VerifyToken(in *user.VerifyTokenRequest) (*user.Verif
 		return nil, errors.New("Invalid creds")
 	}
 
-	l.Logger.Error(fmt.Sprintf("Role Scopes: %v", dbUsers.Scopes))
+	// l.Logger.Error(fmt.Sprintf("Role Scopes: %v", dbUsers.Scopes))
 
 	return &user.VerifyTokenResponse{
 		Id:        dbUsers.Id,
