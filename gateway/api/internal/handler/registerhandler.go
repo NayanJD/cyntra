@@ -6,8 +6,15 @@ import (
 	"cyntra/gateway/api/internal/logic"
 	"cyntra/gateway/api/internal/svc"
 	"cyntra/gateway/api/internal/types"
+
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
+
+type GenericResp struct {
+	Code    int         `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
 
 func RegisterHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -22,7 +29,11 @@ func RegisterHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		if err != nil {
 			httpx.Error(w, err)
 		} else {
-			httpx.OkJson(w, resp)
+			httpx.OkJson(w, GenericResp{
+				Code:    0,
+				Message: "successfull",
+				Data:    resp,
+			})
 		}
 	}
 }
