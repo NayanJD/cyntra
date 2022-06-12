@@ -1,0 +1,8 @@
+Name: public-api
+Host: 0.0.0.0
+Port: ${GATEWAY_PORT}
+UserSvc:
+  Etcd:
+    Hosts:
+      - ${ETCD_HOST}
+    Key: user.rpc

@@ -1,0 +1,26 @@
+type (
+	registerReq {
+		Username   string `form:"username"`
+		First_name string `form:"first_name"`
+		Last_name  string `form:"last_name"`
+		Password   string `form:"password"`
+		Gender     string `form:"gender"`
+		Dob        string `form:"dob"`
+	}
+
+	registerResp {
+		Id         string `form:"id"`
+		Username   string `form:"username"`
+		First_name string `form:"first_name"`
+		Last_name  string `form:"last_name"`
+		Gender     string `form:"gender"`
+		Dob        string `form:"dob"`
+	}
+)
+
+service public-api {
+	@server(
+		handler: RegisterHandler
+	)
+	post /register(registerReq) returns(registerReq)
+}
