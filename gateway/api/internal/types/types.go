@@ -2,19 +2,19 @@
 package types
 
 type RegisterReq struct {
-	Username   string `form:"username"`
-	First_name string `form:"first_name"`
-	Last_name  string `form:"last_name"`
-	Password   string `form:"password"`
-	Gender     string `form:"gender"`
-	Dob        string `form:"dob"`
+	Username   string `json:"username"`
+	First_name string `json:"first_name"`
+	Last_name  string `json:"last_name"`
+	Password   string `json:"password"`
+	Gender     string `json:"gender"`
+	Dob        string `json:"dob"`
 }
 
 type RegisterResp struct {
-	Id         string `form:"id"`
-	Username   string `form:"username"`
-	First_name string `form:"first_name"`
-	Last_name  string `form:"last_name"`
-	Gender     string `form:"gender"`
-	Dob        string `form:"dob"`
+	Id         string `json:"id"`
+	Username   string `json:"username"`
+	First_name string `json:"first_name"`
+	Last_name  string `json:"last_name"`
+	Gender     string `json:"gender"`
+	Dob        string `json:"dob"`
 }

@@ -53,6 +53,6 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (*types.RegisterResp, e
 		First_name: resp.FirstName,
 		Last_name:  resp.LastName,
 		Gender:     resp.Gender,
-		Dob:        resp.Dob.String(),
+		Dob:        resp.Dob.AsTime().Format(time.RFC3339),
 	}, nil
 }
