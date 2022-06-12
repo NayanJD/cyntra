@@ -11,7 +11,7 @@ import (
 
 func dataFunc(mtd *desc.MethodDescriptor, cd *runner.CallData) []byte {
 	msg := &user.VerifyTokenRequest{
-		AccessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ0NDYwNjcsIlVzZXJJZCI6ImU5OTFhNjYxLWU3NmUtNDE2OS04NTFiLWQyZTliMTZiNmNmZiJ9.GgOm0UehLqp7ZtUW5jv6m6Doe3QcEHa_-ygZu7bBGt4",
+		AccessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ0NDgyOTQsIlVzZXJJZCI6ImU5OTFhNjYxLWU3NmUtNDE2OS04NTFiLWQyZTliMTZiNmNmZiJ9.kUM0Gsc5G4M299AJ-i3Fm8RG4OKysqRG0_lr66BmhOs",
 	}
 
 	binData, _ := proto.Marshal(msg)
@@ -46,10 +46,11 @@ func main() {
 
 }
 
-// ghz --insecure \
+// ghz --insecure \                                                                                                                                                                                              ✹ ✚main
 //   --async \
+//   -n 5000 \
 //   -c 1000 \
 //   --proto ./user/rpc/user.proto \
 //   --call user.User.verifyToken \
-//   -d '{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ0NDYwNjcsIlVzZXJJZCI6ImU5OTFhNjYxLWU3NmUtNDE2OS04NTFiLWQyZTliMTZiNmNmZiJ9.GgOm0UehLqp7ZtUW5jv6m6Doe3QcEHa_-ygZu7bBGt4"}' \
+//   -d '{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ0NDgyOTQsIlVzZXJJZCI6ImU5OTFhNjYxLWU3NmUtNDE2OS04NTFiLWQyZTliMTZiNmNmZiJ9.kUM0Gsc5G4M299AJ-i3Fm8RG4OKysqRG0_lr66BmhOs"}' \
 //   0.0.0.0:8080

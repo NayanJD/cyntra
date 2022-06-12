@@ -5,6 +5,8 @@ services:
     expose:
       - "6379"
     image: redis:alpine
+    volumes:
+      - redis:/data
   postgres:
     expose:
       - "5432"
@@ -55,6 +57,14 @@ services:
   user-svc:
     ports:
       - 8080:8080
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: 8G
+        reservations:
+          cpus: 1
+          memory: 4G
     build:
       context: .
       dockerfile: ./user/rpc/Dockerfile
@@ -74,3 +84,4 @@ services:
 volumes:
      pg-db: 
      etcd:
+     redis:
