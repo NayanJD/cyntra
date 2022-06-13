@@ -13,6 +13,8 @@ import (
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 
 	"golang.org/x/crypto/bcrypt"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -38,19 +40,18 @@ func (l *RegisterUserLogic) RegisterUser(in *user.RegisterRequest) (*user.Regist
 	if err != nil && !errors.Is(err, sqlc.ErrNotFound) {
 		l.Logger.Error(err)
 		return nil, errors.New("Unknown error")
-
 	}
 
 	if res != nil {
 		l.Logger.Error("User Already Exists")
-		return nil, errors.New("User Already Exists")
+		return nil, status.Error(codes.AlreadyExists, "User Already Exists")
 	}
 
 	role, err := l.svcCtx.RoleModel.FindOneByName(l.ctx, "default_user")
 
 	if err != nil {
 		l.Logger.Error(err)
-		return nil, errors.New("role not found")
+		return nil, status.Error(codes.Unknown, codes.Unknown.String())
 	}
 
 	hashedPassword, _ := HashPassword(in.Password)
@@ -71,7 +72,7 @@ func (l *RegisterUserLogic) RegisterUser(in *user.RegisterRequest) (*user.Regist
 
 	if err != nil {
 		l.Logger.Error(err)
-		return nil, errors.New("User not created")
+		return nil, status.Error(codes.Unknown, codes.Unknown.String())
 	}
 
 	return &user.RegisterResponse{

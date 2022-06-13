@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 
+	"cyntra/common/errorx"
 	"cyntra/gateway/api/internal/logic"
 	"cyntra/gateway/api/internal/svc"
 	"cyntra/gateway/api/internal/types"
@@ -29,11 +30,7 @@ func RegisterHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		if err != nil {
 			httpx.Error(w, err)
 		} else {
-			httpx.OkJson(w, GenericResp{
-				Code:    0,
-				Message: "successfull",
-				Data:    resp,
-			})
+			httpx.OkJson(w, errorx.NewDefaultSuccess(resp))
 		}
 	}
 }
