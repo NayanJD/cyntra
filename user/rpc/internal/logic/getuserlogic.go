@@ -2,14 +2,13 @@ package logic
 
 import (
 	"context"
-	"errors"
 
 	"cyntra/user/rpc/internal/svc"
 	"cyntra/user/rpc/types/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/stores/sqlc"
-	"google.golang.org/protobuf/types/known/timestamppb"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type GetUserLogic struct {
@@ -29,23 +28,25 @@ func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLo
 func (l *GetUserLogic) GetUser(in *user.IdRequest) (*user.RegisterResponse, error) {
 	// todo: add your logic here and delete this line
 
-	res, err := l.svcCtx.UserModel.FindOne(l.ctx, in.Id)
+	// res, err := l.svcCtx.UserModel.FindOne(l.ctx, in.Id)
 
-	if err != nil {
-		if errors.Is(err, sqlc.ErrNotFound) {
-			return nil, errors.New("User not found")
-		} else {
-			l.Logger.Error(err)
-			return nil, errors.New("Unknown error")
-		}
-	}
+	// if err != nil {
+	// 	if errors.Is(err, sqlc.ErrNotFound) {
+	// 		return nil, errors.New("User not found")
+	// 	} else {
+	// 		l.Logger.Error(err)
+	// 		return nil, errors.New("Unknown error")
+	// 	}
+	// }
 
-	return &user.RegisterResponse{
-		Id:        res.Id,
-		Username:  res.Username,
-		FirstName: res.FirstName,
-		LastName:  res.LastName,
-		Gender:    res.Gender,
-		Dob:       timestamppb.New(res.Dob),
-	}, nil
+	// return &user.RegisterResponse{
+	// 	Id:        res.Id,
+	// 	Username:  res.Username,
+	// 	FirstName: res.FirstName,
+	// 	LastName:  res.LastName,
+	// 	Gender:    res.Gender,
+	// 	Dob:       timestamppb.New(res.Dob),
+	// }, nil
+
+	return nil, status.Error(codes.Unimplemented, codes.Unimplemented.String())
 }
