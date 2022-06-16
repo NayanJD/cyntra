@@ -9,6 +9,7 @@ import (
 	"cyntra/gateway/api/internal/types"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
+	"google.golang.org/grpc/codes"
 )
 
 type GenericResp struct {
@@ -21,7 +22,7 @@ func RegisterHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.RegisterReq
 		if err := httpx.Parse(r, &req); err != nil {
-			httpx.Error(w, err)
+			httpx.Error(w, errorx.NewCodeResponse(codes.InvalidArgument, codes.InvalidArgument.String(), err.Error()))
 			return
 		}
 

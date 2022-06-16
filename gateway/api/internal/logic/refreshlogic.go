@@ -24,7 +24,9 @@ func NewRefreshLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RefreshLo
 }
 
 func (l *RefreshLogic) Refresh(req *types.RegisterReq) (resp *types.RegisterReq, err error) {
-	// todo: add your logic here and delete this line
+	// resp, err := l.svcCtx.UserSvc.Refresh(l.ctx, &user.RefreshRequest{
+	// 	RefreshToken: ,
+	// })
 
 	return
 }

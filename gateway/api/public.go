@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"net/http"
+	"reflect"
 
 	"cyntra/common/errorx"
 	"cyntra/gateway/api/internal/config"
@@ -13,6 +14,7 @@ import (
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
 	"github.com/zeromicro/go-zero/rest/httpx"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
@@ -32,13 +34,21 @@ func main() {
 
 	httpx.SetErrorHandler(func(err error) (int, interface{}) {
 
+		fmt.Println("Error type", reflect.TypeOf(err))
 		st, ok := status.FromError(err)
 
 		if ok {
 			codeResponse := errorx.CodeResponse{Code: st.Code(), Msg: st.Message(), Data: nil}
 			return http.StatusOK, codeResponse.Response()
 		} else {
-			return http.StatusInternalServerError, nil
+			switch v := err.(type) {
+			case *errorx.CodeResponse:
+				return http.StatusUnprocessableEntity, v.Response()
+			default:
+				codeResponse := errorx.CodeResponse{Code: codes.Internal, Msg: codes.Internal.String(), Data: "Internal error occurred"}
+				return http.StatusInternalServerError, codeResponse.Response()
+			}
+			// return http.StatusBadRequest, err
 		}
 	})
 
