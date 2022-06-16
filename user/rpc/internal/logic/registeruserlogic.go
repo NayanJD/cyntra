@@ -39,7 +39,7 @@ func (l *RegisterUserLogic) RegisterUser(in *user.RegisterRequest) (*user.Regist
 
 	if err != nil && !errors.Is(err, sqlc.ErrNotFound) {
 		l.Logger.Error(err)
-		return nil, errors.New("Unknown error")
+		return nil, status.Error(codes.Unknown, codes.Unknown.String())
 	}
 
 	if res != nil {

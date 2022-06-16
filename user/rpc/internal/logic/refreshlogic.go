@@ -11,6 +11,8 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type RefreshLogic struct {
@@ -32,7 +34,7 @@ func (l *RefreshLogic) Refresh(in *user.RefreshRequest) (*user.LoginResponse, er
 
 	if err != nil {
 		l.Logger.Error(err)
-		return nil, errors.New("Invalid refresh token")
+		return nil, status.Error(codes.InvalidArgument, "Invalid refresh token")
 	}
 
 	claims := validatedToken.Claims.(*RefreshJwtClaims)
@@ -44,10 +46,10 @@ func (l *RefreshLogic) Refresh(in *user.RefreshRequest) (*user.LoginResponse, er
 
 	if err == redis.Nil {
 		l.Logger.Error(err)
-		return nil, errors.New("Invalid refresh token")
+		return nil, status.Error(codes.InvalidArgument, "Invalid refresh token")
 	} else if err != nil {
 		l.Logger.Error(err)
-		return nil, errors.New("Unknown error occurred while reading from redis")
+		return nil, status.Error(codes.Unknown, codes.Unknown.String())
 	}
 
 	l.svcCtx.RedisClient.Del(l.ctx, parsedUuid)
@@ -56,20 +58,20 @@ func (l *RefreshLogic) Refresh(in *user.RefreshRequest) (*user.LoginResponse, er
 
 	if cacheUserId != userId {
 		l.Logger.Error("Cache userId and refreshToken does not exists")
-		return nil, errors.New("Invalid refresh token")
+		return nil, status.Error(codes.InvalidArgument, "Invalid refresh token")
 	}
 
 	res, err := l.svcCtx.UserModel.FindOne(l.ctx, userId)
 
 	if err != nil && !errors.Is(err, sqlc.ErrNotFound) {
 		l.Logger.Error(err)
-		return nil, errors.New("Unknown error")
+		return nil, status.Error(codes.Unknown, codes.Unknown.String())
 	}
 
 	if errors.Is(err, sqlc.ErrNotFound) {
 		l.Logger.Error("User does not exists")
 
-		return nil, errors.New("Invalid creds")
+		return nil, status.Error(codes.InvalidArgument, "Invalid creds")
 	}
 
 	accessToken, refreshToken, err := generateAccessRefreshTokens(*l.svcCtx, l.ctx, res.Id)

@@ -60,7 +60,7 @@ service public-api {
 	@server(
 		handler: RefreshHandler
 	)
-	post /refresh(registerReq) returns(registerReq)
+	post /refresh(RefreshReq) returns(loginResp)
 	
 	@server(
 		handler: UpdateUserHandler

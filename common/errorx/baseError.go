@@ -39,3 +39,7 @@ func (e *CodeResponse) Response() *CodeResponseData {
 		Data: e.Data,
 	}
 }
+
+func NewValidationCodeResponse(err error) error {
+	return NewCodeResponse(codes.InvalidArgument, codes.InvalidArgument.String(), err.Error())
+}

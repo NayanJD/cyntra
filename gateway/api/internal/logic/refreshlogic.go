@@ -5,6 +5,7 @@ import (
 
 	"cyntra/gateway/api/internal/svc"
 	"cyntra/gateway/api/internal/types"
+	"cyntra/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -23,10 +24,17 @@ func NewRefreshLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RefreshLo
 	}
 }
 
-func (l *RefreshLogic) Refresh(req *types.RegisterReq) (resp *types.RegisterReq, err error) {
-	// resp, err := l.svcCtx.UserSvc.Refresh(l.ctx, &user.RefreshRequest{
-	// 	RefreshToken: ,
-	// })
+func (l *RefreshLogic) Refresh(req *types.RefreshReq) (*types.LoginResp, error) {
+	resp, err := l.svcCtx.UserSvc.Refresh(l.ctx, &user.RefreshRequest{
+		RefreshToken: req.RefreshToken,
+	})
 
-	return
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.LoginResp{
+		AccessToken:  resp.AccessToken,
+		RefreshToken: resp.RefreshToken,
+	}, nil
 }
