@@ -1,4 +1,4 @@
-FROM golang:alpine AS builder
+FROM golang:1.18.3-alpine3.16 AS builder
 
 LABEL stage=gobuilder
 
@@ -13,6 +13,11 @@ ADD go.sum .
 RUN go mod download
 COPY . .
 COPY user/rpc/etc /app/etc
+
+RUN wget -O grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/v0.4.11/grpc_health_probe-linux-amd64 
+
+RUN chmod u+x grpc_health_probe
+
 RUN go build -ldflags="-s -w" -o /app/user user/rpc/./user.go
 
 
@@ -25,7 +30,10 @@ ENV TZ Asia/Shanghai
 WORKDIR /app
 COPY --from=builder /app/user /app/user
 COPY --from=builder /app/etc /app/etc
+COPY --from=builder /build/grpc_health_probe /bin/grpc_health_probe
+
 
 EXPOSE 8080
 
 CMD ["./user", "-f", "etc/user.yaml"]
+

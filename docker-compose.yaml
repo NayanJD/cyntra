@@ -56,7 +56,7 @@ services:
       - etcd:/etcd_data
   user-svc:
     ports:
-      - 8080:8080
+      - "8080"
     deploy:
       resources:
         limits:
@@ -69,6 +69,7 @@ services:
       context: .
       dockerfile: ./user/rpc/Dockerfile
     environment:
+      USER_SVC_PORT: 8080
       JWT_SECRET: topsecret
       JWT_EXPIRY_SECONDS: 900
       JWT_REFRESH_EXPIRY_SECONDS: 604800
@@ -76,11 +77,29 @@ services:
       REDIS_HOST: redis:6379
       ETCD_HOST: etcd:2379
       POSTGRES_URL: postgres://go:password@postgres-pooler:5432/cyntra_local?sslmode=disable
+    healthcheck:
+      test: ["CMD", "/bin/grpc_health_probe", "-addr=user-svc:8080"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
     depends_on:
       - redis
       - postgres-pooler
       - etcd
-
+  
+  gateway:
+    ports:
+      - "8888"
+    build:
+      context: .
+      dockerfile: gateway/api/Dockerfile
+    environment:
+      ETCD_HOST: etcd:2379
+      GATEWAY_PORT: 8888
+    depends_on:
+      user-svc:
+        condition: service_healthy
+      
 volumes:
      pg-db: 
      etcd:
