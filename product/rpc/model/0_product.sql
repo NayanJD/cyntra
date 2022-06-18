@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS product (
     fade text,
     fabric text NOT NULL,
     category text NOT NULL,
-    countryOfOrigin text NOT NULL,
+    country_of_origin text NOT NULL,
     discount integer NOT NULL DEFAULT 0,
     quantity integer NOT NULL,
     created_at  timestamptz NOT NULL,

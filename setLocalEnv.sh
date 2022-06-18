@@ -12,3 +12,6 @@ export JWT_SECRET=supersecret
 export JWT_EXPIRY_SECONDS=900
 export JWT_REFRESH_EXPIRY_SECONDS=604800
 export REDIS_URL=redis://localhost:6379/0
+
+# Local env for product service
+export PRODUCT_SVC_PORT=8081

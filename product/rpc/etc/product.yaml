@@ -1,7 +1,7 @@
 Name: product.rpc
-ListenOn: 127.0.0.1:8080
+ListenOn: 127.0.0.1:${PRODUCT_SVC_PORT}
 Etcd:
   Hosts:
-  - 127.0.0.1:2379
+  - ${ETCD_HOST}
   Key: product.rpc
 DataSource: ${POSTGRES_URL} 
