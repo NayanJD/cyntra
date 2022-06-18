@@ -75,7 +75,7 @@ func (m *defaultProductModel) Insert(ctx context.Context, data *Product) (sql.Re
 }
 
 func (m *defaultProductModel) FindOne(ctx context.Context, id string) (*Product, error) {
-	query := fmt.Sprintf("select %s from %s where id = $1 limit 1", productRows, m.table)
+	query := fmt.Sprintf("select %s from %s where id = $1 and archived_at is null limit 1", productRows, m.table)
 	var resp Product
 	err := m.conn.QueryRowCtx(ctx, &resp, query, id)
 	switch err {

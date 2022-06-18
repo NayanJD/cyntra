@@ -47,6 +47,32 @@ func (l *CreateProductLogic) CreateProduct(in *product.CreateProductRequest) (*p
 		return nil, status.Errorf(codes.AlreadyExists, "Product %v Already Exists", in.Name)
 	}
 
+	var washCare, stretchable, features, fade string
+
+	if in.WashCare != nil {
+		washCare = *in.WashCare
+	} else {
+		washCare = ""
+	}
+
+	if in.Stretchable != nil {
+		stretchable = *in.Stretchable
+	} else {
+		stretchable = ""
+	}
+
+	if in.Features != nil {
+		features = *in.Features
+	} else {
+		features = ""
+	}
+
+	if in.Fade != nil {
+		fade = *in.Fade
+	} else {
+		fade = ""
+	}
+
 	newId := uuid.New()
 	newProduct := model.Product{
 		Id:              newId.String(),
@@ -57,10 +83,10 @@ func (l *CreateProductLogic) CreateProduct(in *product.CreateProductRequest) (*p
 		Color:           in.Color,
 		Brand:           in.Brand,
 		Shade:           in.Shade,
-		WashCare:        sql.NullString{String: *in.WashCare, Valid: in.WashCare != nil},
-		Stretchable:     sql.NullString{String: *in.Stretchable, Valid: in.Stretchable != nil},
-		Features:        sql.NullString{String: *in.Features, Valid: in.Features != nil},
-		Fade:            sql.NullString{String: *in.Fade, Valid: in.Fade != nil},
+		WashCare:        sql.NullString{String: washCare, Valid: in.WashCare != nil},
+		Stretchable:     sql.NullString{String: stretchable, Valid: in.Stretchable != nil},
+		Features:        sql.NullString{String: features, Valid: in.Features != nil},
+		Fade:            sql.NullString{String: fade, Valid: in.Fade != nil},
 		Fabric:          in.Fabric,
 		Category:        in.Category,
 		CountryOfOrigin: in.CountryOfOrigin,
@@ -97,7 +123,7 @@ func (l *CreateProductLogic) CreateProduct(in *product.CreateProductRequest) (*p
 		Discount:        uint32(in.Discount),
 		Quantity:        uint64(in.Quantity),
 		CreatedAt:       timestamppb.New(newProduct.CreatedAt),
-		UpdatedAt:       timestamppb.New(newProduct.CreatedAt),
+		UpdatedAt:       timestamppb.New(newProduct.UpdatedAt),
 		ArchivedAt:      nil,
 	}, nil
 }
