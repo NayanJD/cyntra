@@ -10,6 +10,7 @@ import (
 	"cyntra/product/rpc/model"
 	"cyntra/product/rpc/types/product"
 
+	"github.com/google/uuid"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"google.golang.org/grpc/codes"
@@ -46,7 +47,9 @@ func (l *CreateProductLogic) CreateProduct(in *product.CreateProductRequest) (*p
 		return nil, status.Errorf(codes.AlreadyExists, "Product %v Already Exists", in.Name)
 	}
 
+	newId := uuid.New()
 	newProduct := model.Product{
+		Id:              newId.String(),
 		Name:            in.Name,
 		Price:           int64(in.Price),
 		Description:     in.Description,
@@ -60,7 +63,7 @@ func (l *CreateProductLogic) CreateProduct(in *product.CreateProductRequest) (*p
 		Fade:            sql.NullString{String: *in.Fade, Valid: in.Fade != nil},
 		Fabric:          in.Fabric,
 		Category:        in.Category,
-		Countryoforigin: in.CountryOfOrigin,
+		CountryOfOrigin: in.CountryOfOrigin,
 		Discount:        int64(in.Discount),
 		Quantity:        int64(in.Quantity),
 		CreatedAt:       time.Now(),
@@ -76,6 +79,7 @@ func (l *CreateProductLogic) CreateProduct(in *product.CreateProductRequest) (*p
 	}
 
 	return &product.ProductResponse{
+		Id:              newProduct.Id,
 		Name:            newProduct.Name,
 		Price:           uint64(newProduct.Price),
 		Description:     newProduct.Description,
@@ -89,7 +93,7 @@ func (l *CreateProductLogic) CreateProduct(in *product.CreateProductRequest) (*p
 		Fade:            in.Fade,
 		Fabric:          newProduct.Fabric,
 		Category:        newProduct.Category,
-		CountryOfOrigin: newProduct.Countryoforigin,
+		CountryOfOrigin: newProduct.CountryOfOrigin,
 		Discount:        uint32(in.Discount),
 		Quantity:        uint64(in.Quantity),
 		CreatedAt:       timestamppb.New(newProduct.CreatedAt),

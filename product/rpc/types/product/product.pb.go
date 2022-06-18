@@ -26,26 +26,23 @@ type CreateProductRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name            string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Price           uint64                 `protobuf:"varint,2,opt,name=price,proto3" json:"price,omitempty"`
-	Description     string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	Size            string                 `protobuf:"bytes,4,opt,name=size,proto3" json:"size,omitempty"`
-	Color           string                 `protobuf:"bytes,5,opt,name=color,proto3" json:"color,omitempty"`
-	Brand           string                 `protobuf:"bytes,6,opt,name=brand,proto3" json:"brand,omitempty"`
-	Shade           string                 `protobuf:"bytes,7,opt,name=shade,proto3" json:"shade,omitempty"`
-	WashCare        *string                `protobuf:"bytes,8,opt,name=washCare,proto3,oneof" json:"washCare,omitempty"`
-	Stretchable     *string                `protobuf:"bytes,9,opt,name=stretchable,proto3,oneof" json:"stretchable,omitempty"`
-	Distress        *string                `protobuf:"bytes,10,opt,name=distress,proto3,oneof" json:"distress,omitempty"`
-	Features        *string                `protobuf:"bytes,11,opt,name=features,proto3,oneof" json:"features,omitempty"`
-	Fade            *string                `protobuf:"bytes,12,opt,name=fade,proto3,oneof" json:"fade,omitempty"`
-	Fabric          string                 `protobuf:"bytes,13,opt,name=fabric,proto3" json:"fabric,omitempty"`
-	Category        string                 `protobuf:"bytes,14,opt,name=category,proto3" json:"category,omitempty"`
-	CountryOfOrigin string                 `protobuf:"bytes,15,opt,name=countryOfOrigin,proto3" json:"countryOfOrigin,omitempty"`
-	Discount        uint32                 `protobuf:"varint,16,opt,name=discount,proto3" json:"discount,omitempty"`
-	Quantity        uint64                 `protobuf:"varint,17,opt,name=quantity,proto3" json:"quantity,omitempty"`
-	CreatedAt       *timestamppb.Timestamp `protobuf:"bytes,18,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
-	UpdatedAt       *timestamppb.Timestamp `protobuf:"bytes,19,opt,name=updatedAt,proto3" json:"updatedAt,omitempty"`
-	ArchivedAt      *timestamppb.Timestamp `protobuf:"bytes,20,opt,name=archivedAt,proto3" json:"archivedAt,omitempty"`
+	Name            string  `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Price           uint64  `protobuf:"varint,2,opt,name=price,proto3" json:"price,omitempty"`
+	Description     string  `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Size            string  `protobuf:"bytes,4,opt,name=size,proto3" json:"size,omitempty"`
+	Color           string  `protobuf:"bytes,5,opt,name=color,proto3" json:"color,omitempty"`
+	Brand           string  `protobuf:"bytes,6,opt,name=brand,proto3" json:"brand,omitempty"`
+	Shade           string  `protobuf:"bytes,7,opt,name=shade,proto3" json:"shade,omitempty"`
+	WashCare        *string `protobuf:"bytes,8,opt,name=washCare,proto3,oneof" json:"washCare,omitempty"`
+	Stretchable     *string `protobuf:"bytes,9,opt,name=stretchable,proto3,oneof" json:"stretchable,omitempty"`
+	Distress        *string `protobuf:"bytes,10,opt,name=distress,proto3,oneof" json:"distress,omitempty"`
+	Features        *string `protobuf:"bytes,11,opt,name=features,proto3,oneof" json:"features,omitempty"`
+	Fade            *string `protobuf:"bytes,12,opt,name=fade,proto3,oneof" json:"fade,omitempty"`
+	Fabric          string  `protobuf:"bytes,13,opt,name=fabric,proto3" json:"fabric,omitempty"`
+	Category        string  `protobuf:"bytes,14,opt,name=category,proto3" json:"category,omitempty"`
+	CountryOfOrigin string  `protobuf:"bytes,15,opt,name=countryOfOrigin,proto3" json:"countryOfOrigin,omitempty"`
+	Discount        uint32  `protobuf:"varint,16,opt,name=discount,proto3" json:"discount,omitempty"`
+	Quantity        uint64  `protobuf:"varint,17,opt,name=quantity,proto3" json:"quantity,omitempty"`
 }
 
 func (x *CreateProductRequest) Reset() {
@@ -197,27 +194,6 @@ func (x *CreateProductRequest) GetQuantity() uint64 {
 		return x.Quantity
 	}
 	return 0
-}
-
-func (x *CreateProductRequest) GetCreatedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return nil
-}
-
-func (x *CreateProductRequest) GetUpdatedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return nil
-}
-
-func (x *CreateProductRequest) GetArchivedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.ArchivedAt
-	}
-	return nil
 }
 
 type ProductResponse struct {
@@ -702,7 +678,7 @@ var file_product_proto_rawDesc = []byte{
 	0x0a, 0x0d, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12,
 	0x07, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
 	0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74,
-	0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xe1, 0x05, 0x0a, 0x14, 0x43, 0x72,
+	0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xb1, 0x04, 0x0a, 0x14, 0x43, 0x72,
 	0x65, 0x61, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
 	0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18,
@@ -733,18 +709,7 @@ var file_product_proto_rawDesc = []byte{
 	0x72, 0x69, 0x67, 0x69, 0x6e, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x69, 0x73, 0x63, 0x6f, 0x75, 0x6e,
 	0x74, 0x18, 0x10, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x08, 0x64, 0x69, 0x73, 0x63, 0x6f, 0x75, 0x6e,
 	0x74, 0x12, 0x1a, 0x0a, 0x08, 0x71, 0x75, 0x61, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x18, 0x11, 0x20,
-	0x01, 0x28, 0x04, 0x52, 0x08, 0x71, 0x75, 0x61, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x12, 0x38, 0x0a,
-	0x09, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x18, 0x12, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
-	0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x09, 0x63, 0x72,
-	0x65, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x12, 0x38, 0x0a, 0x09, 0x75, 0x70, 0x64, 0x61, 0x74,
-	0x65, 0x64, 0x41, 0x74, 0x18, 0x13, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f,
-	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x09, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x41,
-	0x74, 0x12, 0x3a, 0x0a, 0x0a, 0x61, 0x72, 0x63, 0x68, 0x69, 0x76, 0x65, 0x64, 0x41, 0x74, 0x18,
-	0x14, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
-	0x70, 0x52, 0x0a, 0x61, 0x72, 0x63, 0x68, 0x69, 0x76, 0x65, 0x64, 0x41, 0x74, 0x42, 0x0b, 0x0a,
+	0x01, 0x28, 0x04, 0x52, 0x08, 0x71, 0x75, 0x61, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x42, 0x0b, 0x0a,
 	0x09, 0x5f, 0x77, 0x61, 0x73, 0x68, 0x43, 0x61, 0x72, 0x65, 0x42, 0x0e, 0x0a, 0x0c, 0x5f, 0x73,
 	0x74, 0x72, 0x65, 0x74, 0x63, 0x68, 0x61, 0x62, 0x6c, 0x65, 0x42, 0x0b, 0x0a, 0x09, 0x5f, 0x64,
 	0x69, 0x73, 0x74, 0x72, 0x65, 0x73, 0x73, 0x42, 0x0b, 0x0a, 0x09, 0x5f, 0x66, 0x65, 0x61, 0x74,
@@ -894,25 +859,22 @@ var file_product_proto_goTypes = []interface{}{
 	(*timestamppb.Timestamp)(nil),    // 5: google.protobuf.Timestamp
 }
 var file_product_proto_depIdxs = []int32{
-	5,  // 0: product.CreateProductRequest.createdAt:type_name -> google.protobuf.Timestamp
-	5,  // 1: product.CreateProductRequest.updatedAt:type_name -> google.protobuf.Timestamp
-	5,  // 2: product.CreateProductRequest.archivedAt:type_name -> google.protobuf.Timestamp
-	5,  // 3: product.ProductResponse.createdAt:type_name -> google.protobuf.Timestamp
-	5,  // 4: product.ProductResponse.updatedAt:type_name -> google.protobuf.Timestamp
-	5,  // 5: product.ProductResponse.archivedAt:type_name -> google.protobuf.Timestamp
-	2,  // 6: product.Product.getProduct:input_type -> product.GetProductByIdRequest
-	0,  // 7: product.Product.createProduct:input_type -> product.CreateProductRequest
-	3,  // 8: product.Product.updateProduct:input_type -> product.UpdateProductRequest
-	4,  // 9: product.Product.deleteProduct:input_type -> product.DeleteProductByIdRequest
-	1,  // 10: product.Product.getProduct:output_type -> product.ProductResponse
-	1,  // 11: product.Product.createProduct:output_type -> product.ProductResponse
-	1,  // 12: product.Product.updateProduct:output_type -> product.ProductResponse
-	1,  // 13: product.Product.deleteProduct:output_type -> product.ProductResponse
-	10, // [10:14] is the sub-list for method output_type
-	6,  // [6:10] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	5, // 0: product.ProductResponse.createdAt:type_name -> google.protobuf.Timestamp
+	5, // 1: product.ProductResponse.updatedAt:type_name -> google.protobuf.Timestamp
+	5, // 2: product.ProductResponse.archivedAt:type_name -> google.protobuf.Timestamp
+	2, // 3: product.Product.getProduct:input_type -> product.GetProductByIdRequest
+	0, // 4: product.Product.createProduct:input_type -> product.CreateProductRequest
+	3, // 5: product.Product.updateProduct:input_type -> product.UpdateProductRequest
+	4, // 6: product.Product.deleteProduct:input_type -> product.DeleteProductByIdRequest
+	1, // 7: product.Product.getProduct:output_type -> product.ProductResponse
+	1, // 8: product.Product.createProduct:output_type -> product.ProductResponse
+	1, // 9: product.Product.updateProduct:output_type -> product.ProductResponse
+	1, // 10: product.Product.deleteProduct:output_type -> product.ProductResponse
+	7, // [7:11] is the sub-list for method output_type
+	3, // [3:7] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_product_proto_init() }

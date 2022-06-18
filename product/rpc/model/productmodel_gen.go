@@ -52,7 +52,7 @@ type (
 		Fade            sql.NullString `db:"fade"`
 		Fabric          string         `db:"fabric"`
 		Category        string         `db:"category"`
-		Countryoforigin string         `db:"countryoforigin"`
+		CountryOfOrigin string         `db:"country_of_origin"`
 		Discount        int64          `db:"discount"`
 		Quantity        int64          `db:"quantity"`
 		CreatedAt       time.Time      `db:"created_at"`
@@ -70,7 +70,7 @@ func newProductModel(conn sqlx.SqlConn) *defaultProductModel {
 
 func (m *defaultProductModel) Insert(ctx context.Context, data *Product) (sql.Result, error) {
 	query := fmt.Sprintf("insert into %s (%s) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)", m.table, productRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.Id, data.Name, data.Price, data.Description, data.Size, data.Color, data.Brand, data.Shade, data.WashCare, data.Stretchable, data.Distress, data.Features, data.Fade, data.Fabric, data.Category, data.Countryoforigin, data.Discount, data.Quantity, data.CreatedAt, data.UpdatedAt, data.ArchivedAt)
+	ret, err := m.conn.ExecCtx(ctx, query, data.Id, data.Name, data.Price, data.Description, data.Size, data.Color, data.Brand, data.Shade, data.WashCare, data.Stretchable, data.Distress, data.Features, data.Fade, data.Fabric, data.Category, data.CountryOfOrigin, data.Discount, data.Quantity, data.CreatedAt, data.UpdatedAt, data.ArchivedAt)
 	return ret, err
 }
 
@@ -104,7 +104,7 @@ func (m *defaultProductModel) FindOneByName(ctx context.Context, name string) (*
 
 func (m *defaultProductModel) Update(ctx context.Context, data *Product) error {
 	query := fmt.Sprintf("update %s set %s where id = $1", m.table, productRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, data.Id, data.Name, data.Price, data.Description, data.Size, data.Color, data.Brand, data.Shade, data.WashCare, data.Stretchable, data.Distress, data.Features, data.Fade, data.Fabric, data.Category, data.Countryoforigin, data.Discount, data.Quantity, data.CreatedAt, data.UpdatedAt, data.ArchivedAt)
+	_, err := m.conn.ExecCtx(ctx, query, data.Id, data.Name, data.Price, data.Description, data.Size, data.Color, data.Brand, data.Shade, data.WashCare, data.Stretchable, data.Distress, data.Features, data.Fade, data.Fabric, data.Category, data.CountryOfOrigin, data.Discount, data.Quantity, data.CreatedAt, data.UpdatedAt, data.ArchivedAt)
 	return err
 }
 

@@ -25,9 +25,6 @@ message CreateProductRequest {
     string countryOfOrigin = 15;
     uint32 discount = 16;
     uint64 quantity = 17;
-    google.protobuf.Timestamp createdAt = 18;
-    google.protobuf.Timestamp updatedAt = 19;
-    google.protobuf.Timestamp archivedAt = 20;
 }
 
 message ProductResponse {

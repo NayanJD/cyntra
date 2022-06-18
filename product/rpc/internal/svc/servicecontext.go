@@ -4,6 +4,7 @@ import (
 	"cyntra/product/rpc/internal/config"
 	"cyntra/product/rpc/model"
 
+	_ "github.com/lib/pq"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
