@@ -56,7 +56,10 @@ services:
       - etcd:/etcd_data
   
   zookeeper:
-    image: quay.io/debezium/zookeeper:1.9
+    platform: arm64
+    build:
+      context: ./debezium-docker-images/zookeeper/1.9
+      # dockerfile: ./debezium-docker-images/zookeeper/1.9/Dockerfile
     ports:
      - 2181:2181
      - 2888:2888

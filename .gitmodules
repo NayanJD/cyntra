@@ -1,3 +1,0 @@
-[submodule "debezium-docker-images"]
-	path = debezium-docker-images
-	url = https://github.com/NayanJD/debezium-docker-images
