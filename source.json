@@ -1,0 +1,13 @@
+{
+    "name": "product-connector",  
+    "config": {
+      "connector.class": "io.debezium.connector.postgresql.PostgresConnector", 
+      "database.hostname": "postgres-pooler", 
+      "database.port": "5432", 
+      "database.user": "go", 
+      "database.password": "password", 
+      "database.dbname" : "cyntra_local", 
+      "database.server.name": "cyntra_postgres", 
+      "table.include.list": "public.product" 
+    }
+  }
