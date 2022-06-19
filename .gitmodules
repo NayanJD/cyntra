@@ -1,0 +1,3 @@
+[submodule "debezium-docker-images"]
+	path = debezium-docker-images
+	url = git@github.com:debezium/docker-images.git
