@@ -1,5 +1,5 @@
 Name: product.rpc
-ListenOn: 127.0.0.1:${PRODUCT_SVC_PORT}
+ListenOn: 0.0.0.0:${PRODUCT_SVC_PORT}
 Etcd:
   Hosts:
   - ${ETCD_HOST}

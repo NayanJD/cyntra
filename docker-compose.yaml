@@ -56,7 +56,7 @@ services:
       - etcd:/etcd_data
   user-svc:
     ports:
-      - "8080"
+      - 8080:8080
     deploy:
       resources:
         limits:
@@ -87,9 +87,29 @@ services:
       - postgres-pooler
       - etcd
   
+  product-svc:
+    ports:
+      - 8081:8081
+    build:
+      context: .
+      dockerfile: ./product/rpc/Dockerfile
+    environment:
+      PRODUCT_SVC_PORT: 8081
+      ETCD_HOST: etcd:2379
+      POSTGRES_URL: postgres://go:password@postgres-pooler:5432/cyntra_local?sslmode=disable
+    healthcheck:
+      test: ["CMD", "/bin/grpc_health_probe", "-addr=user-svc:8080"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      - user-svc
+      - postgres-pooler
+      - etcd
+  
   gateway:
     ports:
-      - "8888"
+      - "127.0.0.1:8888:8888"
     build:
       context: .
       dockerfile: gateway/api/Dockerfile

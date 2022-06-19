@@ -12,13 +12,14 @@ ADD go.mod .
 ADD go.sum .
 RUN go mod download
 COPY . .
-COPY user/rpc/etc /app/etc
+COPY product/rpc/etc /app/etc
 
-RUN wget -O grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/v0.4.11/grpc_health_probe-linux-arm64 
+# Chose arm64 for running the image in M1 chip. Use amd64 for linux/intel chip mac.
+RUN wget -O grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/v0.4.11/grpc_health_probe-linux-arm64
 
 RUN chmod u+x grpc_health_probe
 
-RUN go build -ldflags="-s -w" -o /app/user user/rpc/./user.go
+RUN go build -ldflags="-s -w" -o /app/product product/rpc/./product.go
 
 
 FROM scratch
@@ -28,12 +29,12 @@ COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /usr/share/zoneinfo/Asia/S
 ENV TZ Asia/Shanghai
 
 WORKDIR /app
-COPY --from=builder /app/user /app/user
+COPY --from=builder /app/product /app/product
 COPY --from=builder /app/etc /app/etc
 COPY --from=builder /build/grpc_health_probe /bin/grpc_health_probe
 
 
 EXPOSE 8080
 
-CMD ["./user", "-f", "etc/user.yaml"]
+CMD ["./product", "-f", "etc/product.yaml"]
 
