@@ -54,6 +54,14 @@ services:
       - '--initial-cluster-state=new'
     volumes:
       - etcd:/etcd_data
+  
+  zookeeper:
+    image: quay.io/debezium/zookeeper:1.9
+    ports:
+     - 2181:2181
+     - 2888:2888
+     - 3888:3888
+
   user-svc:
     ports:
       - 8080:8080
