@@ -1,0 +1,38 @@
+# Zookeeper StatefulSet
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+  namespace: {{ default .Release.Namespace .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: zookeeper
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+        - name: zookeeper
+          image: quay.io/debezium/zookeeper:1.9
+---
+# Zookeeper StatefulSet Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper-lb
+spec:
+  selector:
+    app: zookeeper
+  ports:
+    - port: 2181
+      targetPort: 2181
+      name: port2181
+    - port: 2888
+      targetPort: 2888
+      name: port2888
+    - port: 3888
+      targetPort: 3888
+      name: port3888
