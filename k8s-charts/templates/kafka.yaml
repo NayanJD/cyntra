@@ -15,6 +15,8 @@ spec:
       labels:
         app: kafka
     spec:
+      securityContext:
+        fsGroup: 1001
       containers:
         - name: kafka
           image: quay.io/debezium/kafka:1.9
