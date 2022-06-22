@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: connect
-          image: quay.io/debezium/connect:1.9
+          image: asia.gcr.io/cyntra/connect-pg-es
           env: 
             - name: BOOTSTRAP_SERVERS
               value: kafka-service:9092

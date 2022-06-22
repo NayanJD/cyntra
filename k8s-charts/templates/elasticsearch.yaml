@@ -1,0 +1,65 @@
+# Elasticsearch StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elastic
+  namespace: {{ default .Release.Namespace .Values.namespace }}
+spec:
+  serviceName: elastic-lb-service
+  selector:
+    matchLabels:
+      app: elastic
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: elastic
+    spec:
+      securityContext:
+        fsGroup: 1000
+      initContainers:
+        - name: file-permissions
+          image: busybox
+          command: ['chown', '-R', '1000:1000', '/usr/share/elasticsearch/']
+          volumeMounts:
+          - mountPath: /usr/share/elasticsearch/data
+            name: elastic-disk
+          securityContext:
+            privileged: true
+            runAsUser: 0
+      containers:
+        - name: elastic
+          image: docker.elastic.co/elasticsearch/elasticsearch:7.17.4
+          volumeMounts:
+            - name: elastic-disk
+              mountPath: /usr/share/elasticsearch/data
+          env:
+            - name: http.host
+              value: "0.0.0.0"
+            - name: transport.host
+              value: "127.0.0.1"
+            - name: xpack.security.enabled
+              value: "false"
+            - name: ES_JAVA_OPTS
+              value: "-Xms512m -Xmx512m"
+      # Volume Claim
+  volumeClaimTemplates:
+    - metadata:
+        name: elastic-disk
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+---
+# PostgreSQL StatefulSet Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: elastic-lb
+spec:
+  selector:
+    app: elastic
+  ports:
+    - port: 9200
+      targetPort: 9200

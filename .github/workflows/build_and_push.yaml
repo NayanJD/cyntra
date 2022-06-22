@@ -1,0 +1,25 @@
+name: Push to GCR GitHub Action
+on: 
+  push:
+    branches:
+      - feat/kind
+  pull_request:
+    branches:
+      - feat/kind
+jobs:
+  build-and-push-to-gcr:
+    name: "Bulding and pushing images"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Building and pushing the image"
+        uses: ./
+        with:
+          gcloud_service_key: ${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}
+          registry: asia.gcr.io
+          project_id: cyntra
+          image_name: user-svc
+          image_tag: latest
+          dockerfile: ./user/rpc/Dockerfile
+          context: .
+          # target: build

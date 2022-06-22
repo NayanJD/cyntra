@@ -14,6 +14,7 @@ RUN go mod download
 COPY . .
 COPY user/rpc/etc /app/etc
 
+# Chose arm64 for running the image in M1 chip. Use amd64 for linux/intel chip mac.
 RUN wget -O grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/v0.4.11/grpc_health_probe-linux-arm64 
 
 RUN chmod u+x grpc_health_probe

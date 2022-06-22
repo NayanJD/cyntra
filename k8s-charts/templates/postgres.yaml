@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: postgresql-db
-          image: quay.io/debezium/postgres:12
+          image: asia.gcr.io/cyntra/debezium-postgres:12
           volumeMounts:
             - name: postgresql-db-disk
               mountPath: /data
