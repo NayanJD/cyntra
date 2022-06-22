@@ -1,0 +1,58 @@
+# PostgreSQL StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: etcd
+  namespace: {{ default .Release.Namespace .Values.namespace }}
+spec:
+  serviceName: etcd-service
+  selector:
+    matchLabels:
+      app: etcd
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: etcd
+    spec:
+      containers:
+        - name: etcd
+          image: quay.io/coreos/etcd:v3.5.2
+          command:
+            - /usr/local/bin/etcd
+            - '--name=etcd'
+            - '--advertise-client-urls=http://etcd:2379,http://etcd:4001'
+            - '--listen-client-urls=http://0.0.0.0:2379,http://0.0.0.0:4001'
+            - '--initial-advertise-peer-urls=http://etcd:2380' 
+            - '--listen-peer-urls=http://0.0.0.0:2380' 
+            - '--initial-cluster-token=etcd-cluster-1' 
+            - '--initial-cluster=etcd=http://etcd:2380'
+            - '--initial-cluster-state=new'
+          volumeMounts:
+            - name: etcd-disk
+              mountPath: /etcd_data
+      # Volume Claim
+  volumeClaimTemplates:
+    - metadata:
+        name: etcd-disk
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 500Mi
+---
+# PostgreSQL StatefulSet Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: etcd
+spec:
+  selector:
+    app: etcd
+  ports:
+    - port: 2379
+      targetPort: 2379
+      name: port2379
+    - port: 2380
+      targetPort: 2380
+      name: port2380
