@@ -20,7 +20,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GAR_LOCATION: asia-south1 # TODO: update region of the Artifact Registry
-  GKE_CLUSTER: cyntra  # TODO: update to cluster name
+  GKE_CLUSTER: dev-cluster  # TODO: update to cluster name
   GKE_ZONE: asia-south1-a  # TODO: update to cluster zone
   DEPLOYMENT_NAME: user-service # TODO: update to deployment name
   REPOSITORY: user-service # TODO: update to Artifact Registry docker repository
@@ -50,6 +50,9 @@ jobs:
         cluster_name: ${{ env.GKE_CLUSTER }}
         location: ${{ env.GKE_ZONE }}
         use_auth_provider: true
+
+    # - name: Set up GKE credentials
+    #   run: gcloud container clusters get-credentials $
 
     - name: Configure Docker
       run: gcloud auth configure-docker --quiet
