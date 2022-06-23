@@ -77,4 +77,4 @@ jobs:
       #   version: # default is latest
 
     - name: Update deployment image
-      run: kubectl set image deployment/user-service=asia.gcr.io/$PROJECT_ID/$REPOSITORY
+      run: kubectl set image deployment/user-service user-service=asia.gcr.io/$PROJECT_ID/$REPOSITORY
