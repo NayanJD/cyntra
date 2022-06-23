@@ -1,4 +1,4 @@
-name: Build and Deploy Product Service to GKE
+name: Build and Deploy Gateway to GKE
 
 on:
   push:
@@ -9,8 +9,8 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: dev-cluster  # TODO: update to cluster name
   GKE_ZONE: asia-south1-a  # TODO: update to cluster zone
-  DEPLOYMENT_NAME: product-service # TODO: update to deployment name
-  REPOSITORY: product-service # TODO: update to Artifact Registry docker repository
+  DEPLOYMENT_NAME: gateway # TODO: update to deployment name
+  REPOSITORY: gateway # TODO: update to Artifact Registry docker repository
 
 jobs:
   deploy:
@@ -35,7 +35,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Build Docker image
-      run: docker build . -t asia.gcr.io/$PROJECT_ID/$REPOSITORY -f ./product/rpc/Dockerfile
+      run: docker build . -t asia.gcr.io/$PROJECT_ID/$REPOSITORY -f ./gateway/api/Dockerfile
 
     - name: Push Docker image
       run: docker push asia.gcr.io/$PROJECT_ID/$REPOSITORY
