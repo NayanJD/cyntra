@@ -33,7 +33,7 @@ spec:
             - name: ETCD_HOST
               value: etcd:2379
             - name: POSTGRES_URL
-              value: postgres://postgres:password@ppostgres-db-lb:5432/cyntra_prod?sslmode=disable
+              value: postgres://postgres:password@postgres-db-lb:5432/cyntra_prod?sslmode=disable
 
 
 ---

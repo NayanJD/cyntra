@@ -3,7 +3,7 @@
     "config": {
         "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
         "tasks.max": "1",
-        "topics": "product",
+        "topics": "cyntra_postgres.public.product",
         "connection.url": "http://elastic-lb:9200",
         "transforms": "unwrap,key",
         "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",

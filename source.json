@@ -3,7 +3,7 @@
     "config": {
       "connector.class": "io.debezium.connector.postgresql.PostgresConnector", 
       "database.hostname": "postgres-db-lb", 
-      "database.port": "5432", 
+      "database.port": "5432",
       "database.user": "postgres", 
       "database.password": "password", 
       "database.dbname" : "cyntra_prod", 

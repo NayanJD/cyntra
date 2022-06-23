@@ -16,14 +16,14 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: asia.gcr.io/cyntra/product-svc:latest
+          image: asia.gcr.io/cyntra/product-service:latest
           env:
             - name: PRODUCT_SVC_PORT
               value: "8080"
             - name: ETCD_HOST
               value: etcd:2379
             - name: POSTGRES_URL
-              value: postgres://postgres:password@ppostgres-db-lb:5432/cyntra_prod?sslmode=disable
+              value: postgres://postgres:password@postgres-db-lb:5432/cyntra_prod?sslmode=disable
 ---
 # Zookeeper StatefulSet Service
 apiVersion: v1
