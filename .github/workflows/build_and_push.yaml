@@ -52,7 +52,7 @@ jobs:
     #     use_auth_provider: true
 
     - name: Set up GKE credentials
-      run: gcloud container clusters get-credentials $GKE_CLUSTER
+      run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
 
     - name: Configure Docker
       run: gcloud auth configure-docker --quiet
