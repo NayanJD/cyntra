@@ -47,4 +47,4 @@ jobs:
       #   version: # default is latest
 
     - name: Update deployment image
-      run: kubectl set image deployment/$DEPLOYMENT_NAME product-service=asia.gcr.io/$PROJECT_ID/$REPOSITORY
+      run: kubectl set image deployment/$DEPLOYMENT_NAME gateway=asia.gcr.io/$PROJECT_ID/$REPOSITORY
