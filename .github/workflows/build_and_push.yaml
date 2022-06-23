@@ -43,16 +43,16 @@ jobs:
         service_account_email: ${{ secrets.GCP_EMAIL }}
         service_account_key: ${{ secrets.GCP_CREDENTIALS }}
     
-    - name: Set up GKE credentials
-      uses: google-github-actions/get-gke-credentials@v0.7.0
-      with:
-        project_id: $PROJECT_ID
-        cluster_name: ${{ env.GKE_CLUSTER }}
-        location: ${{ env.GKE_ZONE }}
-        use_auth_provider: true
-
     # - name: Set up GKE credentials
-    #   run: gcloud container clusters get-credentials $
+    #   uses: google-github-actions/get-gke-credentials@v0.7.0
+    #   with:
+    #     project_id: $PROJECT_ID
+    #     cluster_name: ${{ env.GKE_CLUSTER }}
+    #     location: ${{ env.GKE_ZONE }}
+    #     use_auth_provider: true
+
+    - name: Set up GKE credentials
+      run: gcloud container clusters get-credentials $GKE_CLUSTER
 
     - name: Configure Docker
       run: gcloud auth configure-docker --quiet
