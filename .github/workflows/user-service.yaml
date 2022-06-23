@@ -1,0 +1,50 @@
+name: Build and Deploy User Service to GKE
+
+on:
+  push:
+    branches:
+      - "feat/kind"
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: dev-cluster  # TODO: update to cluster name
+  GKE_ZONE: asia-south1-a  # TODO: update to cluster zone
+  DEPLOYMENT_NAME: user-service # TODO: update to deployment name
+  REPOSITORY: user-service # TODO: update to Artifact Registry docker repository
+
+jobs:
+  deploy:
+    name: Setup Gcloud Account
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Login
+      uses: google-github-actions/setup-gcloud@v0
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_email: ${{ secrets.GCP_EMAIL }}
+        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+
+    - name: Set up GKE credentials
+      run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
+
+    - name: Configure Docker
+      run: gcloud auth configure-docker --quiet
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: docker build . -t asia.gcr.io/$PROJECT_ID/$REPOSITORY -f ./user/rpc/Dockerfile
+
+    - name: Push Docker image
+      run: docker push asia.gcr.io/$PROJECT_ID/$REPOSITORY
+    
+    - name: Kubectl tool installer
+      uses: Azure/setup-kubectl@v2.1
+      # with:
+      #   # Version of kubectl
+      #   version: # default is latest
+
+    - name: Update deployment image
+      run: kubectl set image deployment/$DEPLOYMENT_NAME user-service=asia.gcr.io/$PROJECT_ID/$REPOSITORY
