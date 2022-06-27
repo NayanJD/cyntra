@@ -4,6 +4,10 @@ Etcd:
   Hosts:
     - ${ETCD_HOST} # 127.0.0.1:2379
   Key: user.rpc
+Telemetry:
+  Endpoint: http://localhost:14268/api/traces
+  Batcher: jaeger
+
 DataSource: ${POSTGRES_URL} # postgres://go:password@localhost:5432/cyntra_local?sslmode=disable
 Cache:
   - Host: ${REDIS_HOST} # localhost:6379

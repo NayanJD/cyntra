@@ -6,3 +6,6 @@ UserSvc:
     Hosts:
       - ${ETCD_HOST}
     Key: user.rpc
+Telemetry:
+  Endpoint: http://localhost:14268/api/traces
+  Batcher: jaeger
